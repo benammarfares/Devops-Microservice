@@ -8,10 +8,6 @@ pipeline {
             args '-u root -v $HOME/.m2:/root/.m2'
         }
     }
-    environment {
-        Docker_tag = getDockerTag()
-    }
-
     stages {
         stage('Build configServer') {
             steps {
