@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>com.fares</groupId>
 	<artifactId>configServer</artifactId>
-	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>configServer</name>
 	<description>Demo project for Spring Boot</description>
