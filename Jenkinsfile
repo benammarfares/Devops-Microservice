@@ -4,12 +4,7 @@ def getDockerTag() {
 }
 
 pipeline {
-    agent {
-        docker {
-            image 'maven'
-            args '-u root -v $HOME/.m2:/root/.m2'
-        }
-    }
+    agent any
     options {
         skipDefaultCheckout true
     }
@@ -35,7 +30,12 @@ pipeline {
         }
 
         stage('Build discoveryServer') {
-
+            agent {
+                docker {
+                    image 'maven'
+                    args '-u root -v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 script {
                     dir('discorveryServer') {
@@ -46,6 +46,12 @@ pipeline {
         }
 
         stage('Build assurance') {
+            agent {
+                docker {
+                    image 'maven'
+                    args '-u root -v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 script {
                     dir('assurance') {
