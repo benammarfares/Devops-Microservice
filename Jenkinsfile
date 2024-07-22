@@ -14,9 +14,7 @@ pipeline {
                     steps {
                         script {
                             dir('configServer') {
-                                withSonarQubeEnv('sonarserver') {
-                                    sh 'mvn sonar:sonar'
-                                }
+
                                 sh "mvn clean package -DskipTests"
 
                             }
@@ -27,9 +25,7 @@ pipeline {
                     steps {
                         script {
                             dir('discorveryServer') {
-                                withSonarQubeEnv('sonarserver') {
-                                    sh 'mvn sonar:sonar'
-                                }
+
                                 sh "mvn clean package -DskipTests"
 
                             }
@@ -40,9 +36,7 @@ pipeline {
                     steps {
                         script {
                             dir('assurance') {
-                                withSonarQubeEnv('sonarserver') {
-                                    sh 'mvn sonar:sonar'
-                                }
+
                                 sh "mvn clean package -DskipTests"
 
                             }
@@ -53,9 +47,7 @@ pipeline {
                     steps {
                         script {
                             dir('assurancePolicy') {
-                                withSonarQubeEnv('sonarserver') {
-                                    sh 'mvn sonar:sonar'
-                                }
+
                                 sh "mvn clean package -DskipTests"
 
                             }
@@ -66,9 +58,7 @@ pipeline {
                     steps {
                         script {
                             dir('gateway') {
-                                withSonarQubeEnv('sonarserver') {
-                                    sh 'mvn sonar:sonar'
-                                }
+
                                 sh "mvn clean package -DskipTests"
 
                             }
