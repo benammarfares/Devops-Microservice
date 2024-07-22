@@ -101,17 +101,14 @@ agent any
                 stage('Docker Build and Push') {
                     steps {
                         script {
-                            buildAndPushDockerImage('configServer')
+                sh 'docker build . -t fares121/configServer:$Docker_tag'
+                withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
+                sh 'docker login -u fares121 -p ${docker_password}'
+                sh 'docker push fares121/${service}:${env.Docker_tag}'
+                }
                         }
                     }
                 }
     }
 
-    def buildAndPushDockerImage(String service) {
-        sh "docker build -t fares121/${service}:${env.Docker_tag} ."
-        withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
-            sh 'docker login -u fares121 -p ${docker_password}'
-            sh 'docker push fares121/${service}:${env.Docker_tag}'
-        }
-    }
 }
