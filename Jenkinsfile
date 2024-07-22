@@ -4,15 +4,14 @@ def getDockerTag() {
 }
 
 pipeline {
-
+    options {
+        skipDefaultCheckout true
+    }
     agent {
         docker {
             image 'maven'
             args '-u root -v $HOME/.m2:/root/.m2'
         }
-    }
-    options {
-        skipDefaultCheckout true
     }
     environment {
         Docker_tag = getDockerTag()
