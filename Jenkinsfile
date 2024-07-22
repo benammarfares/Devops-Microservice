@@ -13,21 +13,7 @@ pipeline {
     }
 
     stages {
-        stage('Build configServer') {
-            agent {
-                docker {
-                    image 'maven'
-                    args '-u root -v $HOME/.m2:/root/.m2'
-                }
-            }
-            steps {
-                script {
-                    dir('configServer') {
-                        sh "mvn clean package -DskipTests"
-                    }
-                }
-            }
-        }
+
 
         stage('Build discoveryServer') {
             agent {
