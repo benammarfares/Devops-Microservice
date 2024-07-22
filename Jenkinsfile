@@ -7,20 +7,19 @@ pipeline {
     options {
         skipDefaultCheckout true
     }
-    agent {
-        docker {
-            image 'maven'
-            args '-u root -v $HOME/.m2:/root/.m2'
-        }
-    }
+    agent any
     environment {
         Docker_tag = getDockerTag()
     }
 
     stages {
-
-
         stage('Build configServer') {
+            agent {
+                docker {
+                    image 'maven'
+                    args '-u root -v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 script {
                     dir('configServer') {
