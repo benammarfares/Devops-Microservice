@@ -10,8 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Build Other Microservices') {
-            parallel {
                 stage('Build configServer') {
                     steps {
                         script {
@@ -77,8 +75,8 @@ pipeline {
                         }
                     }
                 }
-            }
-        }
+
+
 
     }
 }
