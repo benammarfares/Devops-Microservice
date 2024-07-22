@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     dir('configServer') {
-                        sh "mvn clean package -DskipTests -f pom.xml"
+                        sh "mvn clean package -DskipTests"
                     }
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     dir('discorveryServer') {
-                        sh "mvn clean package -DskipTests -f pom.xml"
+                        sh "mvn clean package -DskipTests"
                     }
                 }
             }
@@ -55,7 +55,7 @@ pipeline {
             steps {
                 script {
                     dir('assurance') {
-                        sh "mvn clean package -DskipTests -f pom.xml"
+                        sh "mvn clean package -DskipTests"
                     }
                 }
             }
@@ -65,7 +65,7 @@ pipeline {
             steps {
                 script {
                     dir('assurancePolicy') {
-                        sh "mvn clean package -DskipTests -f pom.xml"
+                        sh "mvn clean package -DskipTests"
                     }
                 }
             }
@@ -75,7 +75,7 @@ pipeline {
             steps {
                 script {
                     dir('gateway') {
-                        sh "mvn clean package -DskipTests -f gateway/pom.xml"
+                        sh "mvn clean package -DskipTests"
                     }
                 }
             }
