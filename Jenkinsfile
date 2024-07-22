@@ -7,7 +7,6 @@ pipeline {
     options {
         skipDefaultCheckout true
     }
-    agent any
     environment {
         Docker_tag = getDockerTag()
     }
