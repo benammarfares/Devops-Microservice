@@ -1,3 +1,8 @@
+def getDockerTag() {
+    def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+    return tag
+}
+
 pipeline {
     options {
         skipDefaultCheckout true
@@ -8,6 +13,10 @@ pipeline {
             args '-u root -v $HOME/.m2:/root/.m2'
         }
     }
+    environment {
+        Docker_tag = getDockerTag()
+    }
+
     stages {
         stage('Build configServer') {
             steps {
@@ -20,12 +29,6 @@ pipeline {
         }
 
         stage('Build discoveryServer') {
-            agent {
-                docker {
-                    image 'maven'
-                    args '-u root -v $HOME/.m2:/root/.m2'
-                }
-            }
             steps {
                 script {
                     dir('discorveryServer') {
@@ -36,12 +39,6 @@ pipeline {
         }
 
         stage('Build assurance') {
-            agent {
-                docker {
-                    image 'maven'
-                    args '-u root -v $HOME/.m2:/root/.m2'
-                }
-            }
             steps {
                 script {
                     dir('assurance') {
