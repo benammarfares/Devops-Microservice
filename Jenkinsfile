@@ -4,9 +4,14 @@ def getDockerTag() {
 }
 
 pipeline {
-    agent any
     options {
         skipDefaultCheckout true
+    }
+    agent {
+        docker {
+            image 'maven'
+            args '-u root -v $HOME/.m2:/root/.m2'
+        }
     }
     environment {
         Docker_tag = getDockerTag()
@@ -14,12 +19,6 @@ pipeline {
 
     stages {
         stage('Build configServer') {
-            agent {
-                docker {
-                    image 'maven'
-                    args '-u root -v $HOME/.m2:/root/.m2'
-                }
-            }
             steps {
                 script {
                     dir('configServer') {
@@ -81,16 +80,6 @@ pipeline {
             }
         }
 
-        stage('Docker Build and Push') {
-            steps {
-                script {
-                    sh 'docker build . -t fares121/configServer:$Docker_tag'
-                    withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
-                        sh 'docker login -u fares121 -p ${docker_password}'
-                        sh 'docker push fares121/${service}:${env.Docker_tag}'
-                    }
-                }
-            }
-        }
+
     }
 }
