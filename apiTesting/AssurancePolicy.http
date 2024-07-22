@@ -1,0 +1,19 @@
+### Find ALl AssurancePolicy
+GET http://localhost:8090/api/v1/assurancePolicy/allPolicies
+
+### Create new AssurancePolicy
+POST http://localhost:8090/api/v1/assurancePolicy/savePolicy
+Content-Type: application/json
+
+{
+  "policyHolder": "Fares",
+  "policyType": "Comprehensive",
+  "policyDetails": "Full coverage including accidents, theft, and natural disasters",
+  "coverageDetails": "Covers up to 1 Million Dinars in damages",
+  "amountOfAssurance": 75000.00,
+  "policyStartDate": "2024-01-01",
+  "policyEndDate": "2024-12-31",
+  "policyStatus": "Active",
+  "assuranceId": 1
+
+}

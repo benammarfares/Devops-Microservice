@@ -1,0 +1,38 @@
+### Create Assurance from the gateway
+POST http://localhost:8222/api/v1/assurance/save
+Content-Type: application/json
+
+{
+  "claimName": "Accident Claim 1",
+  "claimDate": "2023-04-01",
+  "claimDescription": "Car accident on highway 1",
+  "claimAmount": 5000.00,
+  "claimStatus": "Submitted",
+  "claimProcessedDate": "2023-04-10",
+  "claimPayoutAmount": 3000.00
+}
+
+### Create new AssurancePolicy
+POST http://localhost:8222/api/v1/assurancePolicy/savePolicy
+Content-Type: application/json
+
+{
+  "policyHolder": "Fares",
+  "policyType": "Comprehensive",
+  "policyDetails": "Full coverage including accidents, theft, and natural disasters",
+  "coverageDetails": "Covers up to 1 Million Dinars in damages",
+  "amountOfAssurance": 75000.00,
+  "policyStartDate": "2024-01-01",
+  "policyEndDate": "2024-12-31",
+  "policyStatus": "Active",
+  "assuranceId": 1
+
+}
+
+
+
+### Find ALl Assurance
+GET http://localhost:8222/api/v1/assurance/allAssurances
+
+### Find ALl AssurancePolicy
+GET http://localhost:8222/api/v1/assurancePolicy/allPolicies

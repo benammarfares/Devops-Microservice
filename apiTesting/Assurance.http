@@ -1,0 +1,80 @@
+### Find ALl Assurance
+GET http://localhost:8070/api/v1/assurance/allAssurances
+
+### Create Assurance 1
+POST http://localhost:8070/api/v1/assurance/save
+Content-Type: application/json
+
+{
+  "claimName": "Accident Claim 1",
+  "claimDate": "2023-04-01",
+  "claimDescription": "Car accident on highway 1",
+  "claimAmount": 5000.00,
+  "claimStatus": "Submitted",
+  "claimProcessedDate": "2023-04-10",
+  "claimPayoutAmount": 3000.00
+}
+
+###
+
+### Create Assurance 2
+POST http://localhost:8070/api/v1/assurance/save
+Content-Type: application/json
+
+{
+  "claimName": "Accident Claim 2",
+  "claimDate": "2023-04-02",
+  "claimDescription": "Car accident on highway 2",
+  "claimAmount": 6000.00,
+  "claimStatus": "Processing",
+  "claimProcessedDate": "2023-04-11",
+  "claimPayoutAmount": 3500.00
+}
+
+###
+
+### Create Assurance 3
+POST http://localhost:8070/api/v1/assurance/save
+Content-Type: application/json
+
+{
+  "claimName": "Accident Claim 3",
+  "claimDate": "2023-04-03",
+  "claimDescription": "Car accident on highway 3",
+  "claimAmount": 7000.00,
+  "claimStatus": "Approved",
+  "claimProcessedDate": "2023-04-12",
+  "claimPayoutAmount": 4000.00
+}
+
+###
+
+### Create Assurance 4
+POST http://localhost:8090/assurance/save
+Content-Type: application/json
+
+{
+  "claimName": "Accident Claim 4",
+  "claimDate": "2023-04-04",
+  "claimDescription": "Car accident on highway 4",
+  "claimAmount": 8000.00,
+  "claimStatus": "Denied",
+  "claimProcessedDate": "2023-04-13",
+  "claimPayoutAmount": 0.00
+}
+
+###
+
+### Create Assurance 5
+POST http://localhost:8090/assurance/save
+Content-Type: application/json
+
+{
+  "claimName": "Accident Claim 5",
+  "claimDate": "2023-04-05",
+  "claimDescription": "Car accident on highway 5",
+  "claimAmount": 9000.00,
+  "claimStatus": "Submitted",
+  "claimProcessedDate": "2023-04-14",
+  "claimPayoutAmount": 4500.00
+}
