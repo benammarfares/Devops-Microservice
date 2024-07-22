@@ -107,12 +107,11 @@ agent any
                 }
     }
 
-
     def buildAndPushDockerImage(String service) {
-    sh "docker build -t fares121/${service}:${env.Docker_tag} ."
-    withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
-        sh 'docker login -u fares121 -p ${docker_password}'
-        sh 'docker push fares121/${service}:${env.Docker_tag}'
-    }
+        sh "docker build -t fares121/${service}:${env.Docker_tag} ."
+        withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
+            sh 'docker login -u fares121 -p ${docker_password}'
+            sh 'docker push fares121/${service}:${env.Docker_tag}'
+        }
     }
 }
