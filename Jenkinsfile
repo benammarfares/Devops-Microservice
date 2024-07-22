@@ -13,14 +13,15 @@ pipeline {
     }
 
     stages {
-        agent {
-            docker {
-                image 'maven'
-                args '-u root -v $HOME/.m2:/root/.m2'
-            }
-        }
+
 
         stage('Build configServer') {
+            agent {
+                docker {
+                    image 'maven'
+                    args '-u root -v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 script {
                     dir('configServer') {
@@ -31,6 +32,12 @@ pipeline {
         }
 
         stage('Build discoveryServer') {
+            agent {
+                docker {
+                    image 'maven'
+                    args '-u root -v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 script {
                     dir('discorveryServer') {
@@ -41,6 +48,12 @@ pipeline {
         }
 
         stage('Build assurance') {
+            agent {
+                docker {
+                    image 'maven'
+                    args '-u root -v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 script {
                     dir('assurance') {
@@ -51,6 +64,12 @@ pipeline {
         }
 
         stage('Build assurancePolicy') {
+            agent {
+                docker {
+                    image 'maven'
+                    args '-u root -v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 script {
                     dir('assurancePolicy') {
@@ -61,6 +80,12 @@ pipeline {
         }
 
         stage('Build gateway') {
+            agent {
+                docker {
+                    image 'maven'
+                    args '-u root -v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 script {
                     dir('gateway') {
