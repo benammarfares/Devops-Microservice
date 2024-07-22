@@ -1,16 +1,25 @@
+def getDockerTag() {
+    def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+    return tag
+}
 pipeline {
+agent any
   options {
     skipDefaultCheckout true
   }
-    agent {
-        docker {
-            image 'maven'
-            args '-u root -v $HOME/.m2:/root/.m2'
-        }
-    }
+      environment {
+          Docker_tag = getDockerTag()
+      }
 
     stages {
+
                 stage('Build configServer') {
+                agent {
+                    docker {
+                        image 'maven'
+                        args '-u root -v $HOME/.m2:/root/.m2'
+                    }
+                }
                     steps {
                         script {
                             dir('configServer') {
@@ -22,6 +31,12 @@ pipeline {
                     }
                 }
                 stage('Build discoveryServer') {
+                agent {
+                    docker {
+                        image 'maven'
+                        args '-u root -v $HOME/.m2:/root/.m2'
+                    }
+                }
                     steps {
                         script {
                             dir('discorveryServer') {
@@ -33,6 +48,12 @@ pipeline {
                     }
                 }
                 stage('Build assurance') {
+                agent {
+                    docker {
+                        image 'maven'
+                        args '-u root -v $HOME/.m2:/root/.m2'
+                    }
+                }
                     steps {
                         script {
                             dir('assurance') {
@@ -44,6 +65,12 @@ pipeline {
                     }
                 }
                 stage('Build assurancePolicy') {
+                agent {
+                    docker {
+                        image 'maven'
+                        args '-u root -v $HOME/.m2:/root/.m2'
+                    }
+                }
                     steps {
                         script {
                             dir('assurancePolicy') {
@@ -55,6 +82,12 @@ pipeline {
                     }
                 }
                 stage('Build gateway') {
+                agent {
+                    docker {
+                        image 'maven'
+                        args '-u root -v $HOME/.m2:/root/.m2'
+                    }
+                }
                     steps {
                         script {
                             dir('gateway') {
@@ -65,8 +98,21 @@ pipeline {
                         }
                     }
                 }
+                stage('Docker Build and Push') {
+                    steps {
+                        script {
+                            buildAndPushDockerImage('configServer')
+                        }
+                    }
+                }
+    }
 
 
-
+    def buildAndPushDockerImage(String service) {
+    sh "docker build -t fares121/${service}:${env.Docker_tag} ."
+    withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
+        sh 'docker login -u fares121 -p ${docker_password}'
+        sh 'docker push fares121/${service}:${env.Docker_tag}'
+    }
     }
 }
