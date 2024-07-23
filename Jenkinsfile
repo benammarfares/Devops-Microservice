@@ -17,7 +17,9 @@ pipeline {
                         sh "mvn clean install -DskipTests"
                         def pom = readMavenPom file:'pom.xml'
                         print pom.version
-                        env.version = pom.version
+                        env.VERSION = pom.version
+                        print env.VERSION
+
                     }
                 }
             }
@@ -34,7 +36,7 @@ pipeline {
                 script {
                     dir('configServer') {
                         def service = "configserver"
-                        sh 'docker build -t fares121/${service}:${env.version} .'
+                        sh 'docker build -t fares121/${service}:${env.VERSION} .'
                         withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
                             sh 'docker login -u fares121 -p ${docker_password}'
                             sh 'docker push fares121/${service}:${env.version}'
