@@ -1,6 +1,4 @@
-FROM tomcat
-WORKDIR webapps
-COPY target/configServer.war .
-RUN rm -rf ROOT && mv configServer.war ROOT.war
+FROM openjdk:20
 EXPOSE 8888
-ENTRYPOINT ["sh", "/usr/local/tomcat/bin/startup.sh"]
+ADD target/configServer.jar configServer.jar
+ENTRYPOINT ["java", "-jar", "configServer.jar"]

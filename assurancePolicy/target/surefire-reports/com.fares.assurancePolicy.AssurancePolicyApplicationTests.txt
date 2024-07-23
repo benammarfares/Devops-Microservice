@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.fares.assurancePolicy.AssurancePolicyApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.04 s -- in com.fares.assurancePolicy.AssurancePolicyApplicationTests
