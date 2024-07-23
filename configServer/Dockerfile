@@ -1,4 +1,4 @@
 FROM openjdk
-ADD target/configServer.jar configServer.jar
-ENTRYPOINT ["java", "-jar", "/configServer.jar"]
+COPY /target/configServer-0.0.1-SNAPSHOT.jar /home/configServer-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar", "/home/configServer-0.0.1-SNAPSHOT.jar"]
 EXPOSE 8888
