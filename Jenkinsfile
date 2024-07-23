@@ -8,15 +8,16 @@ pipeline {
             args '-u root -v $HOME/.m2:/root/.m2'
         }
     }
-    environment {
-        DOCKER_TAG = "${GIT_COMMIT.substring(0, 7)}"
-    }
+
     stages {
         stage('Build configServer') {
             steps {
                 script {
                     dir('configServer') {
                         sh "mvn clean install -DskipTests"
+                        def pom = readMavenPom file:'pom.xml'
+                        print pom.version
+                        env.version = pom.version
                     }
                 }
             }
@@ -67,10 +68,10 @@ pipeline {
                 script {
                     dir('configServer') {
                         def service = "configserver"
-                        sh "docker build -t fares121/${service}:${DOCKER_TAG} ."
+                        sh "docker build -t fares121/${service}:${env.version} ."
                         withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
                             sh 'docker login -u fares121 -p ${docker_password}'
-                            sh 'docker push fares121/${service}:${DOCKER_TAG}'
+                            sh 'docker push fares121/${service}:${env.version}'
                         }
                     }
                 }
