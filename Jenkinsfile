@@ -34,8 +34,9 @@ pipeline {
             }
             steps {
                 script {
+                    def service = "configserver"
                     dir('configServer') {
-                        def service = "configserver"
+                        sh "ls -l"
                         sh "docker build -t fares121/${service}:${env.VERSION} ."
                         withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
                             sh 'docker login -u fares121 -p ${docker_password}'
