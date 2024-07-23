@@ -8,6 +8,9 @@ pipeline {
             args '-u root -v $HOME/.m2:/root/.m2'
         }
     }
+    environment {
+        DOCKER_TAG = "${GIT_COMMIT.substring(0, 7)}"
+    }
     stages {
         stage('Build configServer') {
             steps {
@@ -54,6 +57,21 @@ pipeline {
                 script {
                     dir('gateway') {
                         sh "mvn clean install -DskipTests"
+                    }
+                }
+            }
+        }
+
+        stage('Docker Build and Push') {
+            steps {
+                script {
+                    dir('configServer') {
+                        def service = "configserver"
+                        sh "docker build -t fares121/${service}:${DOCKER_TAG} ."
+                        withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
+                            sh 'docker login -u fares121 -p ${docker_password}'
+                            sh 'docker push fares121/${service}:${DOCKER_TAG}'
+                        }
                     }
                 }
             }
