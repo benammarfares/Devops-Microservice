@@ -22,7 +22,7 @@ pipeline {
                         def service = "configserver"
                         sh "pwd"
                         sh "find . -name configServer.jar"
-                        sh "docker build -t configServer.jar ."
+                        sh "docker build -t fares121/${service}:${env.VERSION} ."
                         withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
                             sh 'docker login -u fares121 -p ${docker_password}'
                             sh 'docker push fares121/${service}:${env.version}'
