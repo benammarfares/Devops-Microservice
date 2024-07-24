@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Build configServer') {
             steps {
-                script {
+                    sh "pwd"
                     dir('configServer') {
                         sh "pwd"
                         sh "find . -name Dockerfile"
@@ -28,7 +28,7 @@ pipeline {
                         }
                     }
                     sh 'cd ..'
-                }
+
             }
         }
     }
