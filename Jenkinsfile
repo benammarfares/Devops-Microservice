@@ -43,8 +43,8 @@ pipeline {
 
                   def dockerImage = docker.build("fares121/${service}:${env.VERSION}", "-f Dockerfile .")
 
-                  withCredentials([usernamePassword(credentialsId: 'Docker', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                  withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
+                    sh 'docker login -u fares121 -p ${docker_password}'
                     dockerImage.push()
                   }
                 }
