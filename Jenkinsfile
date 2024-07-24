@@ -18,18 +18,32 @@ pipeline {
                         sh "find . -name Dockerfile"
                         sh "ls -l"
                         sh 'mvn clean install'
-
-                        def service = "configserver"
-                        sh "pwd"
-                        sh "docker build -t fares121/${service}:${env.VERSION} ."
-                        withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
-                            sh 'docker login -u fares121 -p ${docker_password}'
-                            sh 'docker push fares121/${service}:${env.version}'
-                        }
                     }
                     sh 'cd ..'
 
+
             }
         }
+
+                stage('Build dock') {
+                    agent {
+                        dockerfile true
+
+                    }
+                    steps {
+                            sh "pwd"
+                            dir('configServer') {
+                                def service = "configserver"
+                                sh "pwd"
+                                sh "docker build -t fares121/${service}:${env.VERSION} ."
+                                withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
+                                    sh 'docker login -u fares121 -p ${docker_password}'
+                                    sh 'docker push fares121/${service}:${env.version}'
+                                }
+                            }
+                            sh 'cd ..'
+
+                    }
+                }
     }
 }
