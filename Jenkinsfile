@@ -1,16 +1,11 @@
 pipeline {
-    agent any
-
     options {
         skipDefaultCheckout true
     }
+    agent none
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
+
 
         stage('Build Config Server') {
             agent {
@@ -21,9 +16,6 @@ pipeline {
             }
             steps {
                 dir('configServer') {
-                        sh "pwd"
-                        sh "find . -name Dockerfile"
-                        sh "ls -l"
                         sh "mvn clean install -DskipTests"
                         def pom = readMavenPom file:'pom.xml'
                         print pom.version
