@@ -2,27 +2,36 @@ pipeline {
     options {
         skipDefaultCheckout true
     }
-        agent {
-            docker {
-                image 'maven'
-                args '-u root -v $HOME/.m2:/root/.m2'
-            }
-        }
-
-
         stages {
-            stage('Build') {
-                when {
-                    branch 'main'
-                }
+            stage('Checkout') {
                 steps {
-                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'githubtoken', url: 'https://github.com/benammarfares/Assurance-MicroService.git']])
-                    sh 'mvn clean install'
-                     dir('configServer') {
-                            sh 'mvn clean install'
-                     }
+                    checkout scm
                 }
             }
+
+            stage('Build Config Server') {
+                agent {
+                    docker {
+                        image 'maven'
+                        args '-u root -v $HOME/.m2:/root/.m2'
+                    }
+                }
+                script {
+                    dir('configServer') {
+                        sh "pwd"
+                        sh "find . -name Dockerfile"
+                        sh "ls -l"
+                        sh "mvn clean install -DskipTests"
+                        def pom = readMavenPom file:'pom.xml'
+                        print pom.version
+                        env.VERSION = pom.version
+                        print env.VERSION
+
+                    }
+                }
+            }
+
+
 
 
 
