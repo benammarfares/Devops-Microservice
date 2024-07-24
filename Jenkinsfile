@@ -14,6 +14,7 @@ pipeline {
     stage('Build configServer') {
       steps {
         sh "pwd"
+        checkout scm
         dir('configServer') {
           sh "pwd"
           sh "find . -name Dockerfile"
@@ -24,16 +25,16 @@ pipeline {
     }
 
     stage('Build and push Docker image') {
-      agent {
-        dockerfile {
-          filename 'configServer/Dockerfile'
-          args '-u root'
+        agent {
+            docker {
+                image 'docker'
+                args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
+            }
         }
-      }
       steps {
         script {
           def service = "configserver"
-          sh "docker build -t fares121/${service}:${env.VERSION} ."
+          sh "docker build -t fares121/${service}:${env.VERSION} configServer"
           withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
             sh 'docker login -u fares121 -p ${docker_password}'
             sh 'docker push fares121/${service}:${env.VERSION}'
