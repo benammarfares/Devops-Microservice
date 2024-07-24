@@ -5,6 +5,12 @@ pipeline {
     agent none
 
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Build Config Server') {
             agent {
                 docker {
@@ -15,6 +21,13 @@ pipeline {
             steps {
                 dir('configServer') {
                     sh "mvn clean install -DskipTests"
+                }
+            }
+        }
+
+        stage('Get Config Server Version') {
+            steps {
+                dir('configServer') {
                     def pom = readMavenPom file: 'pom.xml'
                     env.VERSION = pom.version
                 }
