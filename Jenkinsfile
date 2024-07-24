@@ -14,60 +14,40 @@ pipeline {
             steps {
                 script {
                     dir('configServer') {
-                        sh "mvn compiler:compile"
-                        sh "mvn clean package -DskipTests"
                         sh "pwd"
                         sh "find . -name Dockerfile"
                         sh "ls -l"
+                        sh 'mvn clean install -DskipTests'
                     }
                     sh 'cd ..'
                 }
             }
         }
-
-        stage('Build discoveryServer') {
+        stage('Docker Build and Push') {
+            agent {
+                docker {
+                    image 'docker'
+                    args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
                 script {
-                    dir('discorveryServer') {
-                        sh "mvn clean install -DskipTests"
+                    def service = "configserver"
+                    dir('configServer') {
+                        sh "docker build -t configServer.jar ."
+                        withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
+                            sh 'docker login -u fares121 -p ${docker_password}'
+                            sh 'docker push fares121/${service}:${env.version}'
+                        }
                     }
-                    sh 'cd ..'
                 }
             }
         }
 
-        stage('Build assurance') {
-            steps {
-                script {
-                    dir('assurance') {
-                        sh "mvn clean install -DskipTests"
-                    }
-                    sh 'cd ..'
-                }
-            }
-        }
 
-        stage('Build assurancePolicy') {
-            steps {
-                script {
-                    dir('assurancePolicy') {
-                        sh "mvn clean install -DskipTests"
-                    }
-                    sh 'cd ..'
-                }
-            }
-        }
 
-        stage('Build gateway') {
-            steps {
-                script {
-                    dir('gateway') {
 
-                        sh "mvn clean install  -DskipTests"
-                    }
-                    sh 'cd ..'
-                }
-            }
-        }
+
+
     }
 }

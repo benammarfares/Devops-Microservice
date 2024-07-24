@@ -67,6 +67,7 @@
 			</plugin>
 
 		</plugins>
+		<finalName>configServer</finalName>
 	</build>
 
 </project>
