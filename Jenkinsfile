@@ -25,7 +25,10 @@ pipeline {
 
     stage('Build and push Docker image') {
       agent {
-        dockerfile true
+        dockerfile {
+          filename 'configServer/Dockerfile'
+          args '-u root'
+        }
       }
       steps {
         script {
