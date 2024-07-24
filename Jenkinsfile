@@ -18,36 +18,19 @@ pipeline {
                         sh "find . -name Dockerfile"
                         sh "ls -l"
                         sh 'mvn clean install -DskipTests'
-                    }
-                    sh 'cd ..'
-                }
-            }
-        }
-        stage('Docker Build and Push') {
-            agent {
-                docker {
-                    image 'docker'
-                    args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
-            steps {
-                script {
-                    def service = "configserver"
-                    dir('configServer') {
+
+                        def service = "configserver"
+                        sh "pwd"
+                        sh "find . -name configServer.jar"
                         sh "docker build -t configServer.jar ."
                         withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
                             sh 'docker login -u fares121 -p ${docker_password}'
                             sh 'docker push fares121/${service}:${env.version}'
                         }
                     }
+                    sh 'cd ..'
                 }
             }
         }
-
-
-
-
-
-
     }
 }
