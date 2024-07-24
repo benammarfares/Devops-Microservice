@@ -9,7 +9,7 @@ pipeline {
             }
         }
 
-    stages {
+
         stages {
             stage('Build') {
                 when {
@@ -28,5 +28,5 @@ pipeline {
 
 
 
-    }
+        }
 }
