@@ -41,11 +41,12 @@ pipeline {
         """
                   writeFile file: 'Dockerfile', text: dockerFile
 
-                  def dockerImage = docker.build("microservices/${service}:${env.VERSION}", "-f Dockerfile .")
+                  def dockerImage = docker.build("fares121/microservices/${service}:${env.VERSION}", "-f Dockerfile .")
 
                   withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
                     sh 'docker login -u fares121 -p ${docker_password}'
-                    dockerImage.push()
+                    dockerImage.push("fares121/microservices/${service}:${env.VERSION}")
+
                   }
                 }
               }
