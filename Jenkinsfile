@@ -15,6 +15,7 @@ pipeline {
                 script {
                     dir('configServer') {
                         sh "mvn compiler:compile"
+                        sh "mvn clean package -DskipTests"
                         sh "pwd"
                         sh "find . -name Dockerfile"
                         sh "ls -l"
