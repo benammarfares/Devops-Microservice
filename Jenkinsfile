@@ -2,8 +2,6 @@ pipeline {
     options {
         skipDefaultCheckout true
     }
-    agent none
-
     stages {
 
 
@@ -25,6 +23,12 @@ pipeline {
             }
         }
             stage('Build Docker Image') {
+                agent {
+                    docker {
+                        image 'docker'
+                        args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
+                    }
+                }
               steps {
                 script {
                   def service = "configserver"
