@@ -17,7 +17,7 @@ pipeline {
                         sh "pwd"
                         sh "find . -name Dockerfile"
                         sh "ls -l"
-                        sh 'mvn clean install -DskipTests'
+                        sh 'mvn clean install'
 
                         def service = "configserver"
                         sh "pwd"
