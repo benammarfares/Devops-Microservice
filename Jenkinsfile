@@ -1,16 +1,16 @@
 pipeline {
-  agent any
     options {
         skipDefaultCheckout true
     }
-    stages {
-        stage('Build configServer') {
-            agent {
-                docker {
-                    image 'maven'
-                    args '-u root -v $HOME/.m2:/root/.m2'
-                }
+        agent {
+            docker {
+                image 'maven'
+                args '-u root -v $HOME/.m2:/root/.m2'
             }
+        }
+
+    stages {
+        stages {
             stage('Build') {
                 when {
                     branch 'main'
@@ -23,7 +23,7 @@ pipeline {
                      }
                 }
             }
-        }
+
 
 
 
