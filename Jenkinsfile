@@ -45,7 +45,7 @@ pipeline {
 
                   withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
                     sh 'docker login -u fares121 -p ${docker_password}'
-                    dockerImage.push("fares121/microservices/${service}:${env.VERSION}")
+                    dockerImage.push()
 
                   }
                 }
