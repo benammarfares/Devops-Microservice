@@ -11,9 +11,11 @@
         <module name="discorveryServer" />
         <module name="configServer" />
         <module name="gateway" />
-        <module name="assurancePolicy" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="assurancePolicy" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

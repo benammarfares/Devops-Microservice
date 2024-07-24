@@ -1,5 +1,0 @@
-spring:
-  application:
-    name: assurancePolicy
-  config:
-    import: optional:configserver:http://localhost:8888

@@ -11,16 +11,16 @@ pipeline {
                     args '-u root -v $HOME/.m2:/root/.m2'
                 }
             }
-            steps {
-                script {
-                    dir('configServer') {
-                        sh "mvn clean install -DskipTests"
-                        def pom = readMavenPom file:'pom.xml'
-                        print pom.version
-                        env.VERSION = pom.version
-                        print env.VERSION
-
-                    }
+            stage('Build') {
+                when {
+                    branch 'main'
+                }
+                steps {
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'githubtoken', url: 'https://github.com/benammarfares/Assurance-MicroService.git']])
+                    sh 'mvn clean install'
+                     dir('configServer') {
+                            sh 'mvn clean install'
+                     }
                 }
             }
         }
