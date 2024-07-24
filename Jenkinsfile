@@ -14,6 +14,9 @@ pipeline {
             steps {
                 script {
                     dir('configServer') {
+                        sh "pwd"
+                        sh "find . -name Dockerfile"
+                        sh "ls -l"
                         sh "mvn clean install -DskipTests"
                     }
                     sh 'cd ..'
