@@ -86,7 +86,7 @@ pipeline {
                   def service = "discoveryserver"
                   def dockerFile = """
         FROM openjdk
-        COPY /discoveryServer/target/discoveryServer-${env.VERSION}.jar discoveryServer-${env.VERSION}.jar
+        COPY /discorveryServer/target/discorveryServer-${env.VERSION}.jar discoveryServer-${env.VERSION}.jar
         ENTRYPOINT ["java", "-jar", "discoveryServer-${env.VERSION}.jar"]
         """
                   writeFile file: 'Dockerfile', text: dockerFile
