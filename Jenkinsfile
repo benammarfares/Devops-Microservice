@@ -43,6 +43,10 @@ pipeline {
             }
         }
 
+
+
+
+
             stage('Build ConfigServer Docker Image') {
                 agent {
                     docker {
@@ -54,7 +58,7 @@ pipeline {
                 script {
                   def service = "configserver"
                   def dockerFile = """
-        FROM openjdk
+        FROM amazon/corretto:17
         EXPOSE 8888
         COPY /configServer/target/configServer-${env.VERSION}.jar configServer-${env.VERSION}.jar
         ENTRYPOINT ["java", "-jar", "configServer-${env.VERSION}.jar"]
