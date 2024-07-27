@@ -76,6 +76,34 @@ pipeline {
                 }
               }
             }
+            stage('Build DiscoveryServer Docker Image') {
+                agent {
+                    docker {
+                        image 'docker'
+                        args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
+                    }
+                }
+              steps {
+                script {
+                  def service = "discoveryserver"
+                  def dockerFile = """
+        FROM openjdk:17
+        COPY /discorveryServer/target/discorveryServer-${env.VERSION}.jar discoveryServer-${env.VERSION}.jar
+        ENTRYPOINT ["java", "-jar", "discoveryServer-${env.VERSION}.jar"]
+        """
+                  writeFile file: 'Dockerfile', text: dockerFile
+
+                  def dockerImage = docker.build("fares121/${service}:${env.VERSION}", "-f Dockerfile .")
+
+                  withCredentials([string(credentialsId: 'Docker', variable: 'docker_password')]) {
+                    sh 'docker login -u fares121 -p ${docker_password}'
+                    dockerImage.push()
+
+                  }
+                }
+              }
+            }
+
 
 
 
