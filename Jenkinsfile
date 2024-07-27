@@ -16,6 +16,7 @@ pipeline {
             steps {
                script {
                   dir('configServer') {
+                    sh "mvn clean compiler:compile"
                     sh "mvn clean install -DskipTests"
                     def pom = readMavenPom file:'pom.xml'
                     env.VERSION = pom.version
