@@ -9,7 +9,7 @@ pipeline {
         stage('Build Config Server') {
             agent {
                 docker {
-                    image 'maven-openjdk17'
+                    image 'maven:3.8.6-openjdk-17'
                     args '-u root -v $HOME/.m2:/root/.m2'
                 }
             }
