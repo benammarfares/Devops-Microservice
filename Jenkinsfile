@@ -58,7 +58,7 @@ pipeline {
                 script {
                   def service = "configserver"
                   def dockerFile = """
-        FROM openjdk
+        FROM openjdk:17
         EXPOSE 8888
         COPY /configServer/target/configServer-${env.VERSION}.jar configServer-${env.VERSION}.jar
         ENTRYPOINT ["java", "-jar", "configServer-${env.VERSION}.jar"]
@@ -89,7 +89,7 @@ pipeline {
                 script {
                   def service = "discoveryserver"
                   def dockerFile = """
-        FROM openjdk
+        FROM openjdk:17
         COPY /discorveryServer/target/discorveryServer-${env.VERSION}.jar discoveryServer-${env.VERSION}.jar
         ENTRYPOINT ["java", "-jar", "discoveryServer-${env.VERSION}.jar"]
         """
