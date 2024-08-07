@@ -17,11 +17,11 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="assurance" options="-parameters" />
-      <module name="assurancePolicy" options="-parameters" />
+      <module name="assurance" options="" />
+      <module name="assurancePolicy" options="" />
       <module name="configServer" options="-parameters" />
-      <module name="discorveryServer" options="-parameters" />
-      <module name="gateway" options="-parameters" />
+      <module name="discorveryServer" options="" />
+      <module name="gateway" options="" />
     </option>
   </component>
 </project>
