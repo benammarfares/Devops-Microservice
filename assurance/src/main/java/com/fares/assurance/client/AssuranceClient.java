@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name="assurancePolicy-service", url="${application.config.assurancePolicy-url}")
+@FeignClient(name="assurancePolicy-service", url="${ASSURANCE_POLICY_URL}")
 public interface AssuranceClient {
     @GetMapping("/getPolicyFromAssurance/{id}")
-     List<PolicyAssurance> findAllPolicyByAssurance(@PathVariable("id") Integer assuranceId);
+    List<PolicyAssurance> findAllPolicyByAssurance(@PathVariable("id") Integer assuranceId);
 
 }

@@ -3,7 +3,8 @@ eureka:
     hostname: localhost
   client:
     service-url:
-      defaultZone: ${DISCOVERY_SERVICE_URL:http://localhost:8761/eureka}
+      defaultZone: ${DISCOVERY_SERVICE_URL:http://discovery-server:8761/eureka}
+
 
 server:
   port: 8070
@@ -12,9 +13,9 @@ spring:
     name: assurance
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/assurance
-    username: postgres
-    password: password
+    url: jdbc:postgresql://${POSTGRES_HOST:devops-microservice-postgres-1}:${POSTGRES_PORT:5432}/${POSTGRES_DB:assurance}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:password}
   jpa:
     hibernate:
       ddl-auto: create
@@ -23,8 +24,11 @@ spring:
 
 application:
   config:
-    assurancePolicy-url: http://localhost:8222/api/v1/assurancePolicy
+    assurancePolicy-url: ${ASSURANCE_POLICY_URL:http://assurance-policy-service:8222/api/v1/assurancePolicy}
 management:
   tracing:
     sampling:
       probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_URL:http://zipkin:9411/api/v2/spans}

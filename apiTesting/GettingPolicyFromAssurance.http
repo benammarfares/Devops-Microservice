@@ -1,2 +1,2 @@
 ### Find Policy By Assurance
-GET http://localhost:8070/api/v1/assurance/getAssurance/1
+GET http://localhost:8222/api/v1/assurance/getAssurance/1

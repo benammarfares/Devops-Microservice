@@ -1,7 +1,5 @@
-server:
-  port: 8070
 spring:
   application:
     name: assurance
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://config-server:8888

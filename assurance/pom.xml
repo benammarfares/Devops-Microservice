@@ -111,6 +111,8 @@
 			</plugin>
 
 		</plugins>
+		<finalName>assurance</finalName>
+
 	</build>
 
 </project>
