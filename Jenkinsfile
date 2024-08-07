@@ -3,13 +3,14 @@ pipeline {
         skipDefaultCheckout true
     }
     agent none
-        tools {
-            maven 'maven_3_9_8'
-        }
     stages {
-
-
         stage('Build Config Server') {
+            agent {
+                docker {
+                    image 'maven'
+                    args '-u root -v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                script {
                   dir('configServer') {
@@ -23,6 +24,12 @@ pipeline {
 
 
         stage('Build Discovery Server') {
+            agent {
+                docker {
+                    image 'maven'
+                    args '-u root -v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                script {
                   dir('discorveryServer') {
@@ -33,6 +40,11 @@ pipeline {
                }
             }
         }
+
+
+
+
+
 
 
 
