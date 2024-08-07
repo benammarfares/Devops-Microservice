@@ -9,16 +9,13 @@ pipeline {
     stages {
         stage('Build Config Server') {
             steps {
-               script {
-                  dir('configServer') {
-                    sh "mvn clean package -DskipTests"
-                    def pom = readMavenPom file:'pom.xml'
-                    env.VERSION = pom.version
-                  }
-               }
+                script {
+                    dir('configServer') {
+                        sh "mvn clean package -DskipTests"
+                    }
+                }
             }
         }
-
 
         stage('Build Discovery Server') {
             steps {
@@ -31,6 +28,5 @@ pipeline {
                }
             }
         }
-
     }
 }
