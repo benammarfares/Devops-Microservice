@@ -5,7 +5,6 @@ pipeline {
     agent any
     tools {
       maven "3.9.8"
-      Docker "27.1.1"
     }
     stages {
         stage('Build Config Server') {
@@ -21,6 +20,9 @@ pipeline {
             }
         }
             stage('Build Assurance Docker Image') {
+                tools {
+                  docker "docker"
+                }
               steps {
                 script {
                   def service = "configserver"
