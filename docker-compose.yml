@@ -1,32 +1,154 @@
 services:
-  postgresql:
-    container_name: postgresql
-    image: postgres
+
+  postgres:
+    image: 'postgres:latest'
+    container_name: devops-microservice-postgres-1
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
+      - 'POSTGRES_DB=assurance'
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_USER=postgres'
     ports:
-      - "5432:5432"
-    networks:
-      - postgres
-    restart: unless-stopped
+      - '5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   zipkin:
     container_name: zipkin
     image: openzipkin/zipkin
     ports:
-      - "9411:9411"
-    networks:
-      - zipkin
+      - '9411:9411'
 
-networks:
-  postgres:
-    driver: bridge
-  zipkin:
-    driver: bridge
 
-volumes:
-  postgres:
+
+  config-server:
+    build: ./configServer
+    container_name: config-server
+    ports:
+      - '8888:8888'
+    expose:
+      - '8888'
+    healthcheck:
+      test:  ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+      interval: 10s
+      retries: 4
+
+  discovery-server:
+    build: ./discorveryServer
+    container_name: discovery-server
+    ports:
+      - '8761:8761'
+    expose:
+      - '8761'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 10s
+      retries: 4
+    environment:
+      - DISCOVERY_SERVICE_URL=http://config-server:8888/eureka
+    depends_on:
+      config-server:
+        condition: service_healthy
+
+  assurance-policy-service:
+    build: ./assurancePolicy
+    container_name: assurance-Policy-service
+    ports:
+      - '8060:8060'
+    expose:
+      - '8060'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-server:8761/eureka
+      - POSTGRES_HOST=devops-microservice-postgres-1
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=assurance
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - ZIPKIN_URL=http://zipkin:9411/api/v2/spans
+    depends_on:
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      zipkin:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8060/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+
+  assurance-service:
+    build: ./assurance
+    container_name: assurance-service
+    ports:
+      - '8070:8070'
+    expose:
+      - '8070'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-server:8761/eureka
+      - POSTGRES_HOST=devops-microservice-postgres-1
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=assurance
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - ASSURANCE_POLICY_URL=http://assurance-policy-service:8060/api/v1/assurancePolicy
+      - ZIPKIN_URL=http://zipkin:9411/api/v2/spans
+    depends_on:
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      assurance-policy-service:
+        condition: service_healthy
+      zipkin:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8070/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+
+
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    ports:
+      - '8222:8222'
+    expose:
+      - '8222'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-server:8761/eureka
+      - ASSURANCE_SERVICE_URI=http://assurance-service:8070
+      - ASSURANCE_POLICY_SERVICE_URI=http://assurance-policy-service:8060
+      - ZIPKIN_URL=http://zipkin:9411/api/v2/spans
+    depends_on:
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      assurance-policy-service:
+        condition: service_healthy
+      zipkin:
+        condition: service_healthy
+      assurance-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8222/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
