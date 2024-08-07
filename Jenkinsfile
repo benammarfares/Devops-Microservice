@@ -2,12 +2,13 @@ pipeline {
     options {
         skipDefaultCheckout true
     }
-    agent any
+    agent none
     tools {
       maven "3.9.8"
     }
     stages {
         stage('Build Config Server') {
+        agent any
             steps {
                 checkout scm
                 script {
