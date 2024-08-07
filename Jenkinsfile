@@ -4,7 +4,7 @@ pipeline {
     }
     agent none
         tools {
-            maven 'mvn-3.9.8'
+            maven 'maven_3_9_8'
         }
     stages {
 
