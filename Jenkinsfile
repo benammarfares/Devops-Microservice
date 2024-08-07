@@ -2,7 +2,7 @@ pipeline {
     options {
         skipDefaultCheckout true
     }
-    agent none
+    agent any
     tools {
       maven "3.9.8"
     }
