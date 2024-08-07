@@ -10,6 +10,7 @@ pipeline {
         stage('Build Config Server') {
         agent any
             steps {
+                checkout scm
                 script {
                     sh "pwd"
                     sh "ls -la"
