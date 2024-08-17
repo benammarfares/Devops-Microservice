@@ -50,13 +50,16 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-![diag](https://github.com/user-attachments/assets/25dbb580-3d09-4d16-b30b-8455f1e2ab4a)
+![dockercompose](https://github.com/user-attachments/assets/670bcd51-19d1-4900-97ad-995aa3e23651)
 
 <br>
 
+![figure microservices](https://github.com/user-attachments/assets/dae8b927-fc8f-489b-976e-1eaa8186bc95)
+
+<br>
 
 * This project is inspired and based from another mini microservice cloud [project](https://github.com/benammarfares/Assurance-MicroService) of mine . :<br> 
-  * I will go threw a ci/cd process to maintain performance and automatic behavior of the project.<br>
+  * I will go threw a process via docker-compse to dockerize all the services and maintain communication between them .<br>
   * Figure 1 shows the approach used in the project.<br>
 
 
@@ -70,15 +73,10 @@
 <br>
 
 * ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-* ![Jenkins](https://img.shields.io/badge/jenkins-%232C5263.svg?style=for-the-badge&logo=jenkins&logoColor=white)
 * ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 * ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
-* ![SonarQube](https://img.shields.io/badge/SonarQube-black?style=for-the-badge&logo=sonarqube&logoColor=4E9BCD)
 * ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 * ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-* ![Ansible](https://img.shields.io/badge/ansible-%231A1918.svg?style=for-the-badge&logo=ansible&logoColor=white)
-* ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)
-* ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
 
 
@@ -90,78 +88,22 @@
 ## Getting Started
 <br>
 
-* Chapter One : Jenkins Configuration with GithubWebhook <br>
-    * 1. Jenkinson instalation on Vm.<br>
-    * 2. Jdk instalation on Vm.<br>
-    * 3. Git instalation on Vm.<br>
-    * 4. Relay instalation on Vm.<br>
-    * 5. Configure tools on jenkins.<br>
-    * 6. Create and configure the pipeline with git repository .<br>
-    * 7. Create a webhookrelay account to get credentials.<br>
-    * 8. Configure WebhookRelay via terminal.<br>
-    * 9. Set WebhookRelay Agent via terminal to get the @Ip.<br>
-    * 10. Create webhook on github repo ad configure it with the @Ip given from WebhookRelay.<br>
-    * 11. Configure pipeline on Build Triggers section.<br>
-    * 12. Test the connectivity between jenkins and github via Jenkinsfile .<br>
-<br><br><br>
+* This project utilizes a microservice architecture based on Spring Cloud and incorporates a DevOps process. <br>
 
-* Chapter Two : Docker and Docker-Compose Instalation  <br>
-    * 1. Docker instalation on Vm.<br>
-    * 2. Docker-Compose instalation on Vm.<br>
-    * 3. Some usefull commands to begin with.<br>
-<br><br><br>
+* For a quick overview, simply run docker-compose up -d --build. This will build and start the containers within <br>
+  your Docker Desktop environment. You can then inspect their behavior through the Docker Desktop interface or view<br>
+  logs for specific containers using terminal commands.
 
-* Chapter Three : SonarQube Configuration with Jenkins <br>
-    * 1. Install SonarQube using Dokcer on Vm.<br>
-    * 2. Install Postgres using Docker on Vm.<br>
-    * 3. Create file  `docker-compose.yml` and implement the postgres and sonarqube configuration .<br>
-    * 3. Test the `docker-compose.yml` via terminal to check connectivity between sonarqube and postgres.<br>
-    * 4. Open sonarqube and get a user token .<br>
-    * 5. Open Jenkins and configure Sonarqube tool with the token and sonarqube @url.<br>
-    * 6. Test Connectivity via Jenkinsfle.<br>
-<br><br><br>
-
-    
-* Chapter Four : Maven Configuration in Jenkins <br>
-    * 1. Install All Maven Plugins in jenkins.<br>
-    * 2. Maven build implementation in Jenkinsfile <br>
-    * 3. Test microservices build status.<br>
+ * Important: <br>
+ * Enter each service via terminal and run the mvn clean package -DskipTests to get your jar within the target in each service.
 
 <br><br><br>
     
-<div style="text-align: center;">
-  <img src="https://github.com/user-attachments/assets/e1cebe9f-5817-4558-a546-c81eeebce894" alt="Vm Configuration">
-</div>
-
-* This project is based on microservice spring Cloud architecture and a Devops process, for a simple look about the project:<br>
-
-   * Jenkins Configuration with GithubWebhook.<br>
-   * SonarQube Configuration with Jenkins.<br>
-   * Maven Configuration in Jenkins.<br>
-   * Dokcerize the microservices and push them to DockerHub .<br>
-   * Ansible Configuration.<br>
-   * Kubernetes Configuration.<br>
-
 
 ### Prerequisites
 
 * Java 17 or more
-* Jenkins Plugins
-    * Docker Api Plugin
-    * Docker Commons Plugin
-    * Docker Pipeline
-    * Docker Plugin
-    * Git Client plugin
-    * Git server plugin 
-    * Github Api plugin
-    * Github integration plugin
-    * Github plugin 
-    * Github branch source plugin
-    * Github integration plugin
-    * Pipeline Maven integration plugin
-    * Pipeline Maven plugin API
-    * Pipeline Maven plugin Database
-    * Pipeline Utility Steps
+* Docker desktop 
 
 ### Installation
 
@@ -169,7 +111,14 @@
    ```sh
    git clone https://github.com/benammarfares/Devops-Microservice-Cloud.git
    ```
-   
+2. Package each service
+   ```sh
+   mvn clean package -DskipTests
+   ```   
+3. To Build containers
+   ```sh
+   docker-compose up --build
+   ```   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
