@@ -62,11 +62,7 @@
   * I will go threw a process via docker-compse to dockerize all the services and maintain communication between them .<br>
   * Figure 1 shows the approach used in the project.<br>
 
-
-
-    
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 ### Built With
@@ -78,11 +74,7 @@
 * ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 * ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
-
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -90,7 +82,7 @@
 
 * This project utilizes a microservice architecture based on Spring Cloud and incorporates a DevOps process. <br>
 
-* For a quick overview, simply run docker-compose up -d --build. This will build and start the containers within <br>
+* For a quick overview, simply run 'docker-compose up -d --build'. This will build and start the containers within <br>
   your Docker Desktop environment. You can then inspect their behavior through the Docker Desktop interface or view<br>
   logs for specific containers using terminal commands.
 
@@ -99,7 +91,6 @@
 
 <br><br><br>
     
-
 ### Prerequisites
 
 * Java 17 or more
