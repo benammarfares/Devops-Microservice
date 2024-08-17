@@ -89,7 +89,7 @@
  * Important: <br>
  * Enter each service via terminal and run the mvn clean package -DskipTests to get your jar within the target in each service.
 
-<br><br><br>
+<br>
     
 ### Prerequisites
 
